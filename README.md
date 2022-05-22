@@ -4,9 +4,13 @@ Generate MySQL database and user SQL queries generator
 
 ## Installation
 
-```bash
-git clone git@github.com:podlom/generate-mysql-db-access.git
-cd generate-mysql-db-access
-composer install
-```
+    git clone git@github.com:podlom/generate-mysql-db-access.git
+    cd generate-mysql-db-access
+    composer install
+
+## Usage
+
+Command line interface usage:
+
+    php mysql.php -pDbNamePrefix
 
