@@ -24,7 +24,7 @@ function getDbPass()
 {
     $client = new Client([
         // Base URI is used with relative requests
-        'base_uri' => 'http://rp.shkodenko.kiev.ua/',
+        'base_uri' => 'https://rndpwd.info/',
         // You can set any number of default request options.
         'timeout'  => 2.0,
     ]);
@@ -88,10 +88,10 @@ EOINF;
 }
 
 if (count($argv) == 1) {
-	echo 'Script usage: php ' . $argv[0] . ' -pPrefix [ -hMyDbHost]' . PHP_EOL;
-	exit(1);
+    echo 'Script usage: php ' . $argv[0] . ' -pPrefix [ -hMyDbHost]' . PHP_EOL;
+    exit(1);
 } else {
-	$opts = getopt("p::h::");
+    $opts = getopt("p::h::");
     echo getMysqlAccess($opts) . PHP_EOL;
-	exit(0);
+    exit(0);
 }
