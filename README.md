@@ -10,7 +10,18 @@ Generate MySQL database and user SQL queries generator
 
 ## Usage
 
-Command line interface usage:
+### PHP command line usage
+
+PHP command line interface usage example:
 
     php mysql.php -pDbNamePrefix
 
+### Use on a web server
+
+Build-in PHP web server example usage:
+
+    php -S localhost:8000
+    
+make user TCP port 8000 is free or use any other available port.
+Then open [http://localhost:8000](http://localhost:8000) to generate MySQL access information.
+It will serve index.php in the generate-mysql-db-access directory.
