@@ -66,13 +66,33 @@ function getMysqlAccess($data)
         $dbHost = $data['host'];
     }
 
+    $includeTestDb = false;
+    if (!empty($data['test'])) {
+        $includeTestDb = true;
+    }
+
     $dbSuffix = 'db';
     $dbName = $prefix . $num . $dbSuffix;
+    if ($includeTestDb) {
+        $testDbName = $prefix . $num . $dbSuffix . '_test';
+    }
 
     $uSuffix = 'u';
     $dbUser = $prefix . $num . $uSuffix;
 
     $dbPass = getDbPass();
+
+    $testAccessInfo = '';
+    if ($includeTestDb && !empty($testDbName)) {
+        $testAccessInfo = <<<ETINF
+<br>
+CREATE DATABASE `{$testDbName}` /*!40100 DEFAULT CHARACTER SET utf8 */; <br>
+GRANT ALL ON `{$testDbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}"; <br>
+FLUSH PRIVILEGES; <br>
+
+ETINF;
+
+    }
 
     $accessInfo = <<<EOINF
 
@@ -80,6 +100,7 @@ CREATE DATABASE `{$dbName}` /*!40100 DEFAULT CHARACTER SET utf8 */; <br>
 GRANT ALL ON `{$dbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}"; <br>
 FLUSH PRIVILEGES;
 
+{$testAccessInfo}
 EOINF;
 
     return $accessInfo;
@@ -105,6 +126,10 @@ if (!empty($_POST)) {
     <div>
         <label for="host1">Host: </label>
         <input type="text" name="host" id="host1" value="localhost">
+    </div>
+    <div>
+        <label for="test1">Create test DB: </label>
+        <input type="checkbox" name="test" id="test1" value="1">
     </div>
     <div>
         <input type="submit" value="Generate">

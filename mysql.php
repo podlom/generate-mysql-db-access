@@ -9,6 +9,7 @@
  * Command line interface to generate MySQL database & user setup SQL queries
  * @example usage $ php mysql.php -ptest
  * @example usage $ php mysql.php -ptest -hdbhost
+ * @example usage $ php mysql.php -ptest -hdbhost -t1
  */
 
 require 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -68,13 +69,32 @@ function getMysqlAccess($data)
         $dbHost = $data['h'];
     }
 
+    $includeTestDb = false;
+    if (!empty($data['t'])) {
+        $includeTestDb = true;
+    }
+
     $dbSuffix = 'db';
     $dbName = $prefix . $num . $dbSuffix;
+    if ($includeTestDb) {
+        $testDbName = $prefix . $num . $dbSuffix . '_test';
+    }
 
     $uSuffix = 'u';
     $dbUser = $prefix . $num . $uSuffix;
 
     $dbPass = getDbPass();
+
+    $testAccessInfo = '';
+    if ($includeTestDb && !empty($testDbName)) {
+        $testAccessInfo = <<<ETINF
+CREATE DATABASE `{$testDbName}` /*!40100 DEFAULT CHARACTER SET utf8 */;
+GRANT ALL ON `{$testDbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}";
+FLUSH PRIVILEGES;
+
+ETINF;
+
+    }
 
     $accessInfo = <<<EOINF
 
@@ -82,16 +102,17 @@ CREATE DATABASE `{$dbName}` /*!40100 DEFAULT CHARACTER SET utf8 */;
 GRANT ALL ON `{$dbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}";
 FLUSH PRIVILEGES;
 
+{$testAccessInfo}
 EOINF;
 
     return $accessInfo;
 }
 
 if (count($argv) == 1) {
-    echo 'Script usage: php ' . $argv[0] . ' -pPrefix [ -hMyDbHost]' . PHP_EOL;
+    echo 'Script usage: php ' . $argv[0] . ' -pPrefix [ -hMyDbHost][ -t]' . PHP_EOL;
     exit(1);
 } else {
-    $opts = getopt("p::h::");
+    $opts = getopt("p::h::t::");
     echo getMysqlAccess($opts) . PHP_EOL;
     exit(0);
 }
