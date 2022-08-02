@@ -12,9 +12,13 @@ Generate MySQL database and user SQL queries generator
 
 ### PHP command line usage
 
-PHP command line interface usage example:
+PHP command line interface usage examples:
 
-    php mysql.php -pDbNamePrefix
+    php mysql.php -pDbNamePrefix[ -hlocalhost][ -t1]
+
+**-p**DbNamePrefix db and user names prefix
+**-h**localhost (optional) db host name
+**-t**1 (optioal) setup additional _test database
 
 ### Use on a web server
 
