@@ -1,0 +1,5 @@
+# Exclude phpStorm IDE settings folder
+.idea/*
+
+# Exclude composer vendor folder
+vendor/*
