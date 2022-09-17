@@ -1,8 +1,8 @@
 <?php
-
 /**
  * Created by PhpStorm.
- * @author: Shkodenko Taras <taras@shkodenko.com>
+ * @author: Taras Shkodenko <taras@shkodenko.com>
+ * 
  * Date: 21.12.2017
  * Time: 16:34
  *
@@ -85,10 +85,12 @@ function getMysqlAccess($data)
 
     $dbPass = getDbPass();
 
+    $charset = '/*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */';
+
     $testAccessInfo = '';
     if ($includeTestDb && !empty($testDbName)) {
         $testAccessInfo = <<<ETINF
-CREATE DATABASE `{$testDbName}` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE `{$testDbName}` {$charset};
 GRANT ALL ON `{$testDbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}";
 FLUSH PRIVILEGES;
 
@@ -98,7 +100,7 @@ ETINF;
 
     $accessInfo = <<<EOINF
 
-CREATE DATABASE `{$dbName}` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE `{$dbName}` {$charset};
 GRANT ALL ON `{$dbName}`.* TO '{$dbUser}'@{$dbHost} IDENTIFIED BY "{$dbPass}";
 FLUSH PRIVILEGES;
 
