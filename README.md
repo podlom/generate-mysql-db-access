@@ -34,8 +34,10 @@ It will serve index.php in the generate-mysql-db-access directory.
 
 1. Clone your git repository source to a src folder using command below:
     git clone git@github.com:podlom/generate-mysql-db-access.git ./src
-2. Build docker image using command:
+2. Copy Dockerfile using command:
+    cp -fvp ./src/Dockerfile ./
+3. Build docker image using command:
     docker build -t generate-mysql-access-docker .
-3. Run docker image using:
+4. Run docker image using:
     docker run -p 80:80 generate-mysql-access-docker
-4. Open the app in your favorite browser by visiting URL: http://localhost/
+5. Open the app in your favorite browser by visiting URL: http://localhost/
