@@ -49,3 +49,6 @@ It will serve index.php in the generate-mysql-db-access directory.
     docker run -p 80:80 generate-mysql-access-docker
 
 5. Open the app in your favorite browser by visiting URL: http://localhost/
+
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L3L5LJ3TB)
